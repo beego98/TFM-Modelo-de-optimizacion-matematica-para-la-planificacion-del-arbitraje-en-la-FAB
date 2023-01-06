@@ -1,5 +1,4 @@
 from FAB_CONJUNTOS import (categorias_federados,
-                           categorias_escolares,
                            categorias_feb,
                            categorias_arbitros,
                            categorias_oficiales)
@@ -831,6 +830,7 @@ def cuaterna_oficiales(P, partidos, lista_de_oficiales, oficiales, OP, AD_FEB, C
                                                                         TO[p].append((a,b,c,d))
 
             
+            #Partidos de silla de ruedas
             elif ca == categorias_feb[5]:
                 for a in (lista_de_oficiales[categorias_oficiales[0]] +
                           lista_de_oficiales[categorias_oficiales[1]] +
