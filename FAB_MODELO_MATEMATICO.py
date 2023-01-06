@@ -545,7 +545,7 @@ def modelo_matematico(fecha_de_designacion,
     for a in AP3:
         if [x for x in PA[a] if x in PD] != []:
             mn +=1
-    pad = min(0.75*mn, 0.75*2*len(PD))       
+    pad = min(0.75*mn, 0.75*2*len(PD))   
 
     ##CONJUNTOS AUXILIARES CREADOS PARA FACILITAR LA DECLARACIÓN DE LAS VARIABLES DE DECISIÓN x,y,z
     x_index = [(p,i,j) for p in P for (i,j) in TA[p]]
@@ -652,11 +652,6 @@ def modelo_matematico(fecha_de_designacion,
     modelo.fa2 = py.Param(initialize = fa2) #Número mínimo de árbitros de categoría A4, que tienen que arbitrar los partidos de la categoria 1ª Nacional Femenina A2
     modelo.pad = py.Param(initialize = pad) #Número mínimo de árbitros de categoría P3, que tienen que arbitrar los partidos de las categorías Junior Aragon Masculino 2ª y 2ª Aragonesa Femenina
 
-    print(ma1)
-    print(fa1)
-    print(ma2)
-    print(fa2)
-
     modelo.mx = py.Param(initialize = mx) #Número máximo de partidos que hay en una franja
     modelo.mn = py.Param(initialize = mn) #Número máximo de partidos entre las franjas que no corresponden al valor del parámetro mx
 
@@ -691,7 +686,7 @@ def modelo_matematico(fecha_de_designacion,
     modelo.obj = py.Objective(rule = objetivo, sense = py.maximize)
 
     ##RESTRICCIONES
-    '''1. Cada partido puede ser arbitrado/anotado por una única tupla/cuaterna de árbitros/oficiales de mesa, respectivamente.'''
+    '''1. Cada partido puede ser arbitrado/anotado a lo sumo por una única tupla/cuaterna de árbitros/oficiales de mesa, respectivamente.'''
     def todos_partidos_arbitrados(modelo,p):
         rest = sum(modelo.x[p,i,j] for (i,j) in modelo.TA[p]) <= 1
         return rest
@@ -995,10 +990,10 @@ def modelo_matematico(fecha_de_designacion,
                                     
                                     #Además hay que asegurarse que aquellas personas que hagan el primer partido, pero no el segundo, tengan coche
                                     #para volver a Zaragoza tras acabar el primer partido
-                                    modelo.partidos_con_desplazamiento.add(sum(modelo.y[q,a] for a in modelo.CH) + 1 <= sum(modelo.y[p,a] for a in modelo.CH)) 
+                                    modelo.partidos_con_desplazamiento.add(sum(modelo.y[q,a] for a in modelo.CH) + 1 <= sum(modelo.y[p,a] for a in modelo.CH))
                                 
                                 if no[p] < no[q]:
-                                    modelo.partidos_con_desplazamiento.add(sum(modelo.y[p,a] for a in modelo.CH) + 1 <= sum(modelo.y[q,a] for a in modelo.CH))                                                
+                                    modelo.partidos_con_desplazamiento.add(sum(modelo.y[p,a] for a in modelo.CH) + 1 <= sum(modelo.y[q,a] for a in modelo.CH))                                   
                                 
                                 ##ÁRBITROS##
                                 if ((modelo.ct[p] in [categorias_federados[0], categorias_federados[1]]) or
