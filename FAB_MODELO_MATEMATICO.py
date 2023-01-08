@@ -857,7 +857,7 @@ def modelo_matematico(fecha_de_designacion,
         for a in modelo.AFEB:
             modelo.partidos_naciones_arbitros.add(sum(modelo.y[p,a] for p in NFA1 + NMA1) <= 1)
 
-    print("Restriccion 'Arbitros combinacion en categoria nacional' añadida")
+    print("Restriccion 9 'Arbitros combinacion en categoria nacional' añadida")
         
     '''10. Cada fin de semana cada árbitro, puede árbitrar a lo sumo 4 partidos federados'''
     modelo.partidos_maximos_totales = py.ConstraintList()
@@ -920,7 +920,6 @@ def modelo_matematico(fecha_de_designacion,
                     oficiales_eba_disponibles.append(o)
     
     moed = min(3,int(len(oficiales_eba_disponibles)/len(P_EBA_LF2)))
-    print('moed', moed)
 
     for p in P_EBA_LF2:
         modelo.restricciones_oficiales.add(sum(modelo.y[p,o] for o in OLF2) >= moed)
